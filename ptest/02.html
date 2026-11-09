@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102c52">
+
+    <title>مجله تک‌مارکت | دنیای فناوری و تکنولوژی</title>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts -->
+    <style>
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Regular.woff2");
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Medium.woff2");
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Bold.woff2");
+            font-weight: 700;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Estedad, sans-serif;
+            background: #f5f7fb;
+            color: #172b48;
+            margin: 0;
+        }
+
+        :root {
+            --primary: #102c52;
+            --accent: #2878e8;
+            --muted: #78869b;
+        }
+
+        .container-main {
+            width: min(1250px, 94%);
+            margin: auto;
+        }
+
+        .header {
+            background: var(--primary);
+        }
+
+        .article-card {
+            background: white;
+            border: 1px solid #edf0f5;
+            border-radius: 17px;
+            overflow: hidden;
+            transition: .25s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(20,45,80,.09);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .article-card:hover .article-image {
+            transform: scale(1.04);
+        }
+
+        .image-wrapper {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .category-item {
+            transition: .2s;
+        }
+
+        .category-item:hover {
+            transform: translateY(-4px);
+            border-color: #b7d1f5;
+            color: var(--accent);
+        }
+
+        .featured {
+            min-height: 390px;
+            background:
+                linear-gradient(90deg, rgba(8,27,52,.95), rgba(8,27,52,.55)),
+                url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1400") center/cover;
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transition: .2s;
+        }
+
+        .btn-primary:hover {
+            background: #1763ca;
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .input {
+            width: 100%;
+            outline: none;
+            border: 1px solid #e5eaf1;
+            background: white;
+            border-radius: 12px;
+            padding: 13px 15px;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .input:focus {
+            border-color: #2878e8;
+            box-shadow: 0 0 0 3px #2878e81a;
+        }
+
+        .newsletter {
+            background: linear-gradient(120deg,#102c52,#1b477d);
+            border-radius: 22px;
+        }
+
+        .tag {
+            background: #edf4ff;
+            color: #2878e8;
+            padding: 5px 11px;
+            font-size: 11px;
+            border-radius: 7px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #102c52;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 12px;
+            z-index: 100;
+            box-shadow: 0 10px 30px #0002;
+            animation: appear .25s ease;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media(max-width:768px) {
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .featured {
+                min-height: 340px;
+                background-position: center;
+            }
+
+            .article-image {
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- HEADER -->
+
+    <header class="header text-white">
+
+        <div class="container-main">
+
+            <div class="h-20 flex items-center justify-between gap-5">
+
+                <a href="#" class="flex items-center gap-3">
+
+                    <div class="w-11 h-11 bg-blue-500 rounded-xl flex items-center justify-center">
+                        <i data-lucide="monitor" class="w-6 h-6"></i>
+                    </div>
+
+                    <div>
+                        <h1 class="font-bold text-xl">تک‌مارکت</h1>
+                        <p class="text-xs text-blue-200">مجله فناوری و دیجیتال</p>
+                    </div>
+
+                </a>
+
+
+                <nav class="desktop-nav flex items-center gap-8 text-sm text-blue-100">
+
+                    <a href="#" class="text-white">خانه</a>
+                    <a href="#categories" class="hover:text-white">دسته‌بندی‌ها</a>
+                    <a href="#latest" class="hover:text-white">مقالات</a>
+                    <a href="#popular" class="hover:text-white">محبوب‌ترین‌ها</a>
+                    <a href="#about" class="hover:text-white">درباره مجله</a>
+
+                </nav>
+
+
+                <div class="flex items-center gap-3">
+
+                    <a href="#latest"
+                       class="hidden sm:flex items-center gap-2 border border-white/20 rounded-xl px-4 py-2 text-sm hover:bg-white/10">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                        جستجوی مقالات
+                    </a>
+
+                    <button
+                        id="menuBtn"
+                        class="mobile-menu icon-btn p-2 rounded-xl hover:bg-white/10"
+                        aria-label="باز کردن منو">
+                        <i data-lucide="menu"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <nav id="mobileNav" class="hidden pb-5 flex-col gap-4 text-sm text-blue-100">
+                <a href="#">خانه</a>
+                <a href="#categories">دسته‌بندی‌ها</a>
+                <a href="#latest">مقالات</a>
+                <a href="#popular">محبوب‌ترین‌ها</a>
+                <a href="#about">درباره مجله</a>
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main class="container-main py-9">
+
+
+        <!-- BREADCRUMB -->
+
+        <div class="flex items-center gap-2 text-xs text-gray-400 mb-7">
+
+            <a href="#" class="hover:text-blue-600">خانه</a>
+
+            <i data-lucide="chevron-left" class="w-3 h-3"></i>
+
+            <span class="text-gray-700">مجله تک‌مارکت</span>
+
+        </div>
+
+
+        <!-- HERO -->
+
+        <section class="featured">
+
+            <div class="max-w-2xl p-7 md:p-12 text-white">
+
+                <span class="bg-blue-500/20 text-blue-200 px-3 py-2 rounded-lg text-xs">
+                    مجله تخصصی تکنولوژی
+                </span>
+
+                <h2 class="text-3xl md:text-4xl font-bold leading-relaxed mt-7">
+                    دنیای فناوری را
+                    <br>
+                    عمیق‌تر بشناس!
+                </h2>
+
+                <p class="text-blue-100 text-sm leading-8 mt-4 max-w-lg">
+                    جدیدترین آموزش‌ها، اخبار تکنولوژی، ترفندهای
+                    کامپیوتری و مقالات تخصصی را در مجله تک‌مارکت دنبال کن.
+                </p>
+
+                <a href="#latest"
+                   class="inline-flex items-center gap-2 bg-white text-blue-950 rounded-xl px-6 py-3 mt-7 text-sm font-bold hover:bg-blue-50">
+                    مطالعه مقالات
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTRO STATS -->
+
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-7">
+
+            <div class="bg-white rounded-xl border border-gray-100 p-5">
+                <i data-lucide="book-open" class="text-blue-600 w-6 h-6"></i>
+                <h3 class="font-bold mt-3">مقالات تخصصی</h3>
+                <p class="text-xs text-gray-400 mt-1">محتوای کاربردی و آموزشی</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-5">
+                <i data-lucide="graduation-cap" class="text-blue-600 w-6 h-6"></i>
+                <h3 class="font-bold mt-3">آموزش رایگان</h3>
+                <p class="text-xs text-gray-400 mt-1">یادگیری مهارت‌های جدید</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-5">
+                <i data-lucide="cpu" class="text-blue-600 w-6 h-6"></i>
+                <h3 class="font-bold mt-3">دنیای تکنولوژی</h3>
+                <p class="text-xs text-gray-400 mt-1">بررسی جدیدترین فناوری‌ها</p>
+            </div>
+
+            <div class="bg-white rounded-xl border border-gray-100 p-5">
+                <i data-lucide="lightbulb" class="text-blue-600 w-6 h-6"></i>
+                <h3 class="font-bold mt-3">ایده‌های کاربردی</h3>
+                <p class="text-xs text-gray-400 mt-1">ترفندهای دنیای دیجیتال</p>
+            </div>
+
+        </section>
+
+
+        <!-- CATEGORIES -->
+
+        <section id="categories" class="mt-14">
+
+            <div class="mb-6">
+                <h2 class="section-title">دسته‌بندی مطالب</h2>
+                <p class="text-sm text-gray-400 mt-2">
+                    موضوع مورد علاقه‌ات را انتخاب کن
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+
+                <button data-category="all" class="category-item bg-blue-50 border border-blue-200 text-blue-700 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="layout-grid" class="w-7 h-7"></i>
+                    <span class="text-sm">همه مطالب</span>
+                </button>
+
+                <button data-category="programming" class="category-item bg-white border border-gray-100 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="code" class="w-7 h-7"></i>
+                    <span class="text-sm">برنامه‌نویسی</span>
+                </button>
+
+                <button data-category="hardware" class="category-item bg-white border border-gray-100 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="cpu" class="w-7 h-7"></i>
+                    <span class="text-sm">سخت‌افزار</span>
+                </button>
+
+                <button data-category="software" class="category-item bg-white border border-gray-100 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="monitor" class="w-7 h-7"></i>
+                    <span class="text-sm">نرم‌افزار</span>
+                </button>
+
+                <button data-category="design" class="category-item bg-white border border-gray-100 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="palette" class="w-7 h-7"></i>
+                    <span class="text-sm">طراحی</span>
+                </button>
+
+                <button data-category="technology" class="category-item bg-white border border-gray-100 rounded-2xl p-5 flex flex-col items-center gap-3">
+                    <i data-lucide="rocket" class="w-7 h-7"></i>
+                    <span class="text-sm">تکنولوژی</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- LATEST ARTICLES -->
+
+        <section id="latest" class="mt-14">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+                    <h2 class="section-title">جدیدترین مقالات</h2>
+                    <p class="text-sm text-gray-400 mt-2">
+                        تازه‌ترین مطالب منتشر شده در مجله
+                    </p>
+                </div>
+
+                <span id="articleCount" class="text-xs text-gray-400">
+                    ۶ مقاله
+                </span>
+
+            </div>
+
+
+            <div id="articlesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+
+                <!-- ARTICLE 1 -->
+
+                <article data-category="programming" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=700"
+                            alt="محیط برنامه نویسی"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            برنامه‌نویسی
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۲۵ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۸ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            از کجا برنامه‌نویسی را شروع کنیم؟
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            راهنمای شروع برنامه‌نویسی برای افراد مبتدی
+                            و آشنایی با مسیر یادگیری توسعه وب.
+                        </p>
+
+                        <a href="#"
+                           class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ARTICLE 2 -->
+
+                <article data-category="hardware" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1591488320449-011701bb6704?w=700"
+                            alt="قطعات سخت افزاری کامپیوتر"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            سخت‌افزار
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۲۲ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۶ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            راهنمای انتخاب قطعات کامپیوتر
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            با مهم‌ترین قطعات سخت‌افزاری و معیارهای
+                            انتخاب یک سیستم مناسب آشنا شوید.
+                        </p>
+
+                        <a href="#" class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ARTICLE 3 -->
+
+                <article data-category="software" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1484417894907-623942c8ee29?w=700"
+                            alt="لپ تاپ و نرم افزار"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            نرم‌افزار
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۲۰ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۵ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            ۱۰ نرم‌افزار ضروری برای ویندوز
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            مجموعه‌ای از ابزارهای کاربردی که
+                            تجربه استفاده از ویندوز را بهتر می‌کنند.
+                        </p>
+
+                        <a href="#" class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ARTICLE 4 -->
+
+                <article data-category="design" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=700"
+                            alt="طراحی رابط کاربری"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            طراحی
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۱۸ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۷ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            اصول طراحی رابط کاربری حرفه‌ای
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            اصول مهم UI و UX که هر طراح وب باید
+                            برای ساخت تجربه بهتر بداند.
+                        </p>
+
+                        <a href="#" class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ARTICLE 5 -->
+
+                <article data-category="technology" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=700"
+                            alt="فناوری و مدار الکترونیکی"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            تکنولوژی
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۱۵ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۹ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            آینده تکنولوژی در دنیای دیجیتال
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            نگاهی به فناوری‌های جدید و تأثیر آن‌ها
+                            بر آینده زندگی روزمره.
+                        </p>
+
+                        <a href="#" class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ARTICLE 6 -->
+
+                <article data-category="programming" class="article-card">
+
+                    <div class="image-wrapper">
+                        <img
+                            class="article-image"
+                            src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=700"
+                            alt="کدنویسی جاوااسکریپت"
+                            loading="lazy">
+
+                        <span class="absolute top-4 right-4 tag">
+                            برنامه‌نویسی
+                        </span>
+                    </div>
+
+                    <div class="p-5">
+
+                        <div class="flex items-center gap-3 text-xs text-gray-400">
+                            <span>۱۲ آبان ۱۴۰۵</span>
+                            <span>•</span>
+                            <span>۱۰ دقیقه مطالعه</span>
+                        </div>
+
+                        <h3 class="font-bold text-base leading-8 mt-4">
+                            چرا JavaScript یکی از محبوب‌ترین زبان‌هاست؟
+                        </h3>
+
+                        <p class="text-gray-400 text-xs leading-7 mt-3">
+                            بررسی کاربردها، ویژگی‌ها و فرصت‌های
+                            برنامه‌نویسی با جاوااسکریپت.
+                        </p>
+
+                        <a href="#" class="article-link inline-flex items-center gap-2 text-blue-600 text-sm font-medium mt-5">
+                            ادامه مطلب
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- POPULAR ARTICLES -->
+
+        <section id="popular" class="mt-16">
+
+            <div class="mb-6">
+                <h2 class="section-title">مطالب محبوب</h2>
+                <p class="text-sm text-gray-400 mt-2">
+                    مقالاتی که بیشتر مورد توجه کاربران قرار گرفته‌اند
+                </p>
+            </div>
+
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                <article class="bg-white border border-gray-100 rounded-2xl p-4 flex gap-4 items-center">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=300"
+                        class="w-28 h-28 object-cover rounded-xl"
+                        alt="برنامه نویسی">
+
+                    <div>
+                        <span class="tag">آموزش</span>
+
+                        <h3 class="font-bold text-sm leading-7 mt-3">
+                            چگونه یک توسعه‌دهنده وب شویم؟
+                        </h3>
+
+                        <p class="text-xs text-gray-400 mt-2">
+                            مسیر یادگیری توسعه وب از صفر تا حرفه‌ای
+                        </p>
+                    </div>
+
+                </article>
+
+
+                <article class="bg-white border border-gray-100 rounded-2xl p-4 flex gap-4 items-center">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=300"
+                        class="w-28 h-28 object-cover rounded-xl"
+                        alt="قطعات الکترونیکی">
+
+                    <div>
+                        <span class="tag">سخت‌افزار</span>
+
+                        <h3 class="font-bold text-sm leading-7 mt-3">
+                            چطور سرعت کامپیوتر خود را افزایش دهیم؟
+                        </h3>
+
+                        <p class="text-xs text-gray-400 mt-2">
+                            راهکارهای کاربردی برای بهینه‌سازی سیستم
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEWSLETTER -->
+
+        <section class="newsletter mt-16 p-7 md:p-12 text-white relative overflow-hidden">
+
+            <div class="relative z-10 max-w-2xl">
+
+                <span class="text-blue-300 text-sm">
+                    خبرنامه تک‌مارکت
+                </span>
+
+                <h2 class="text-2xl md:text-3xl font-bold mt-4">
+                    از دنیای تکنولوژی عقب نمون!
+                </h2>
+
+                <p class="text-blue-100 text-sm leading-8 mt-4">
+                    با عضویت در خبرنامه، جدیدترین مقالات و آموزش‌های
+                    تخصصی را مستقیماً در ایمیل خود دریافت کن.
+                </p>
+
+                <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 mt-7">
+
+                    <input
+                        id="emailInput"
+                        type="email"
+                        required
+                        placeholder="آدرس ایمیل شما..."
+                        class="flex-1 rounded-xl px-5 py-4 text-gray-800 text-sm outline-none"
+                    >
+
+                    <button
+                        type="submit"
+                        class="bg-white text-blue-950 font-bold px-7 py-4 rounded-xl text-sm hover:bg-blue-50 transition">
+                        عضویت در خبرنامه
+                    </button>
+
+                </form>
+
+                <p id="newsletterMessage" class="text-xs mt-4 text-blue-200"></p>
+
+            </div>
+
+            <div class="absolute left-10 top-10 opacity-10">
+                <i data-lucide="mail" class="w-56 h-56"></i>
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section id="about" class="mt-16 text-center max-w-3xl mx-auto">
+
+            <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto">
+                <i data-lucide="book-open" class="w-7 h-7"></i>
+            </div>
+
+            <h2 class="text-2xl font-bold mt-5">
+                درباره مجله تک‌مارکت
+            </h2>
+
+            <p class="text-sm text-gray-500 leading-9 mt-4">
+                مجله تک‌مارکت با هدف انتشار محتوای آموزشی،
+                تخصصی و کاربردی در حوزه فناوری اطلاعات،
+                کامپیوتر، برنامه‌نویسی و دنیای دیجیتال فعالیت می‌کند.
+                تلاش ما این است که تکنولوژی را ساده‌تر و قابل‌دسترس‌تر کنیم.
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="header text-white mt-20">
+
+        <div class="container-main py-12">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+
+                <div>
+
+                    <h2 class="font-bold text-xl">تک‌مارکت</h2>
+
+                    <p class="text-blue-200 text-sm leading-8 mt-4">
+                        مجله تخصصی آموزش و فناوری.
+                        همراه شما در مسیر یادگیری دنیای دیجیتال.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">دسترسی سریع</h3>
+
+                    <div class="flex flex-col gap-3 text-sm text-blue-200">
+
+                        <a href="#">صفحه اصلی</a>
+                        <a href="#latest">جدیدترین مقالات</a>
+                        <a href="#categories">دسته‌بندی‌ها</a>
+                        <a href="#popular">مطالب محبوب</a>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">موضوعات</h3>
+
+                    <div class="flex flex-col gap-3 text-sm text-blue-200">
+
+                        <a href="#categories">برنامه‌نویسی</a>
+                        <a href="#categories">سخت‌افزار</a>
+                        <a href="#categories">نرم‌افزار</a>
+                        <a href="#categories">طراحی و گرافیک</a>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <h3 class="font-bold mb-5">ارتباط با ما</h3>
+
+                    <p class="text-sm text-blue-200 leading-8">
+                        info@example.com
+                    </p>
+
+                    <div class="flex gap-3 mt-4">
+
+                        <a href="https://instagram.com" target="_blank" rel="noreferrer"
+                           aria-label="اینستاگرام"
+                           class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <i data-lucide="instagram"></i>
+                        </a>
+
+                        <a href="https://telegram.org" target="_blank" rel="noreferrer"
+                           aria-label="تلگرام"
+                           class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                            <i data-lucide="send"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="border-t border-white/10 mt-12 pt-6 text-center text-xs text-blue-300">
+                تمامی حقوق برای مجله تک‌مارکت محفوظ است.
+                © 2026
+            </div>
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+    lucide.createIcons();
+
+
+    // Mobile Navigation
+
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileNav = document.getElementById("mobileNav");
+
+    menuBtn.addEventListener("click", () => {
+        mobileNav.classList.toggle("hidden");
+        mobileNav.classList.toggle("flex");
+    });
+
+
+    // Category Filtering
+
+    const categoryButtons = document.querySelectorAll("[data-category]");
+    const articles = document.querySelectorAll("[data-category]");
+    const articleCount = document.getElementById("articleCount");
+
+    categoryButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const category = button.dataset.category;
+
+            categoryButtons.forEach(btn => {
+                btn.classList.remove(
+                    "bg-blue-50",
+                    "border-blue-200",
+                    "text-blue-700"
+                );
+
+                btn.classList.add("bg-white", "border-gray-100");
+            });
+
+            button.classList.remove("bg-white", "border-gray-100");
+
+            button.classList.add(
+                "bg-blue-50",
+                "border-blue-200",
+                "text-blue-700"
+            );
+
+            let count = 0;
+
+            document.querySelectorAll("#articlesGrid article").forEach(article => {
+
+                const show =
+                    category === "all" ||
+                    article.dataset.category === category;
+
+                article.style.display = show ? "block" : "none";
+
+                if (show) count++;
+
+            });
+
+            articleCount.textContent =
+                new Intl.NumberFormat("fa-IR").format(count) + " مقاله";
+
+            document.getElementById("latest").scrollIntoView({
+                behavior: "smooth"
+            });
+
+        });
+
+    });
+
+
+    // Newsletter Simulation
+
+    const newsletterForm = document.getElementById("newsletterForm");
+
+    newsletterForm.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+        const email = document.getElementById("emailInput").value;
+        const message = document.getElementById("newsletterMessage");
+
+        if (!email || !email.includes("@")) {
+            message.textContent = "لطفاً یک ایمیل معتبر وارد کنید.";
+            return;
+        }
+
+        message.textContent =
+            "درخواست عضویت ثبت شد. برای ثبت واقعی، Backend لازم است.";
+
+        newsletterForm.reset();
+
+    });
+
+
+    // Article links
+
+    document.querySelectorAll(".article-link").forEach(link => {
+
+        link.addEventListener("click", event => {
+
+            event.preventDefault();
+
+            alert("صفحه اختصاصی مقاله در نسخه فعلی هنوز پیاده‌سازی نشده است.");
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

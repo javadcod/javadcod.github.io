@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js Frontend</title>
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-5 py-4 flex justify-between items-center">
+
+            <h1 class="text-xl font-black text-indigo-600">
+                {{ siteName }}
+            </h1>
+
+            <nav class="hidden md:flex gap-8 text-sm text-gray-600">
+                <a href="#" v-for="link in links" :key="link">
+                    {{ link }}
+                </a>
+            </nav>
+
+            <button
+                @click="showMessage"
+                class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-sm">
+                تماس با ما
+            </button>
+
+        </div>
+    </header>
+
+
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-5 py-24">
+
+        <div class="max-w-2xl">
+
+            <span class="text-indigo-600 font-bold text-sm">
+                {{ hero.badge }}
+            </span>
+
+            <h2 class="text-4xl md:text-6xl font-black leading-tight mt-5">
+                {{ hero.title }}
+            </h2>
+
+            <p class="text-gray-500 leading-8 mt-6">
+                {{ hero.description }}
+            </p>
+
+            <button
+                @click="scrollToServices"
+                class="bg-indigo-600 text-white px-8 py-3 rounded-xl mt-8 hover:bg-indigo-700">
+                مشاهده خدمات
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Services -->
+    <section id="services" class="bg-white py-20">
+
+        <div class="max-w-6xl mx-auto px-5">
+
+            <h2 class="text-3xl font-black mb-3">
+                خدمات ما
+            </h2>
+
+            <p class="text-gray-500 mb-10">
+                خدمات تخصصی ما را مشاهده کنید.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <div
+                    v-for="service in services"
+                    :key="service.id"
+                    class="p-7 rounded-2xl border border-gray-100 hover:shadow-xl transition">
+
+                    <div class="text-4xl mb-5">
+                        {{ service.icon }}
+                    </div>
+
+                    <h3 class="font-bold text-xl mb-3">
+                        {{ service.title }}
+                    </h3>
+
+                    <p class="text-gray-500 text-sm leading-7">
+                        {{ service.description }}
+                    </p>
+
+                    <button
+                        @click="selectService(service)"
+                        class="text-indigo-600 text-sm font-bold mt-6">
+                        اطلاعات بیشتر ←
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="py-20">
+
+        <div class="max-w-6xl mx-auto px-5 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+
+            <div v-for="item in stats" :key="item.title">
+
+                <h3 class="text-4xl font-black text-indigo-600">
+                    {{ item.value }}
+                </h3>
+
+                <p class="text-gray-500 mt-3 text-sm">
+                    {{ item.title }}
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Projects -->
+    <section class="bg-white py-20">
+
+        <div class="max-w-6xl mx-auto px-5">
+
+            <div class="flex justify-between items-center mb-10">
+
+                <h2 class="text-3xl font-black">
+                    پروژه‌های ما
+                </h2>
+
+                <span class="text-gray-400 text-sm">
+                    {{ projects.length }} پروژه
+                </span>
+
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+
+                <article
+                    v-for="project in projects"
+                    :key="project.id"
+                    class="rounded-2xl overflow-hidden border border-gray-100">
+
+                    <div class="h-48 bg-indigo-100 flex items-center justify-center text-5xl">
+                        {{ project.icon }}
+                    </div>
+
+                    <div class="p-5">
+
+                        <h3 class="font-bold text-lg">
+                            {{ project.title }}
+                        </h3>
+
+                        <p class="text-gray-500 text-sm mt-3">
+                            {{ project.description }}
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-white py-10">
+
+        <div class="max-w-6xl mx-auto px-5 flex justify-between items-center">
+
+            <h2 class="font-black text-xl">
+                {{ siteName }}
+            </h2>
+
+            <p class="text-gray-400 text-xs">
+                © 2026 All Rights Reserved
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Modal -->
+    <div
+        v-if="selectedService"
+        @click.self="selectedService = null"
+        class="fixed inset-0 bg-black/50 flex items-center justify-center p-5">
+
+        <div class="bg-white rounded-2xl p-8 max-w-md w-full">
+
+            <div class="text-4xl mb-4">
+                {{ selectedService.icon }}
+            </div>
+
+            <h2 class="text-2xl font-black">
+                {{ selectedService.title }}
+            </h2>
+
+            <p class="text-gray-500 leading-8 mt-4">
+                {{ selectedService.description }}
+            </p>
+
+            <button
+                @click="selectedService = null"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-xl mt-6">
+                بستن
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const { createApp, ref } = Vue;
+
+createApp({
+
+    setup() {
+
+        // Site Information
+
+        const siteName = ref('VUE STUDIO');
+
+        const links = ref([
+            'خانه',
+            'خدمات',
+            'پروژه‌ها',
+            'درباره ما'
+        ]);
+
+
+        // Hero
+
+        const hero = ref({
+
+            badge: 'خلاقیت، تکنولوژی و طراحی',
+
+            title: 'ایده‌های شما را به واقعیت تبدیل می‌کنیم.',
+
+            description:
+                'ما با استفاده از تکنولوژی‌های روز، تجربه‌های دیجیتال جذاب و حرفه‌ای خلق می‌کنیم.'
+
+        });
+
+
+        // Services
+
+        const services = ref([
+
+            {
+                id: 1,
+                icon: '💻',
+                title: 'طراحی وب سایت',
+                description: 'طراحی و توسعه وب‌سایت‌های مدرن، سریع و ریسپانسیو.'
+            },
+
+            {
+                id: 2,
+                icon: '🎨',
+                title: 'طراحی گرافیک',
+                description: 'طراحی هویت بصری، لوگو و محتوای تبلیغاتی.'
+            },
+
+            {
+                id: 3,
+                icon: '⚙️',
+                title: 'برنامه نویسی',
+                description: 'توسعه نرم‌افزارها و سیستم‌های اختصاصی.'
+            }
+
+        ]);
+
+
+        // Statistics
+
+        const stats = ref([
+
+            { title: 'پروژه انجام شده', value: '120+' },
+
+            { title: 'مشتری راضی', value: '85+' },
+
+            { title: 'سال تجربه', value: '5+' },
+
+            { title: 'خدمات تخصصی', value: '12+' }
+
+        ]);
+
+
+        // Projects
+
+        const projects = ref([
+
+            {
+                id: 1,
+                icon: '🛍️',
+                title: 'فروشگاه اینترنتی',
+                description: 'طراحی فروشگاه آنلاین مدرن.'
+            },
+
+            {
+                id: 2,
+                icon: '📱',
+                title: 'اپلیکیشن مدیریت',
+                description: 'سیستم مدیریت و کنترل اطلاعات.'
+            },
+
+            {
+                id: 3,
+                icon: '🌐',
+                title: 'وب سایت شرکتی',
+                description: 'طراحی وب سایت معرفی کسب‌وکار.'
+            }
+
+        ]);
+
+
+        // Modal
+
+        const selectedService = ref(null);
+
+
+        function selectService(service) {
+
+            selectedService.value = service;
+
+        }
+
+
+        function showMessage() {
+
+            alert('از طریق راه‌های ارتباطی با ما در تماس باشید.');
+
+        }
+
+
+        function scrollToServices() {
+
+            document
+                .getElementById('services')
+                .scrollIntoView({
+                    behavior: 'smooth'
+                });
+
+        }
+
+
+        return {
+
+            siteName,
+            links,
+            hero,
+            services,
+            stats,
+            projects,
+            selectedService,
+
+            selectService,
+            showMessage,
+            scrollToServices
+
+        };
+
+    }
+
+}).mount('#app');
+
+</script>
+
+</body>
+</html>

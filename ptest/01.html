@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#102c52">
+
+    <title>تک‌مارکت | فروشگاه خدمات رایانه‌ای</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Fonts -->
+    <style>
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Regular.woff2");
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Medium.woff2");
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Estedad;
+            src: url("https://cdn.jsdelivr.net/gh/font-store/font-estedad@master/Estedad-Bold.woff2");
+            font-weight: 700;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Estedad, sans-serif;
+            background: #f5f7fb;
+            color: #172b48;
+            margin: 0;
+        }
+
+        button, input {
+            font-family: inherit;
+        }
+
+        :root {
+            --primary: #102c52;
+            --primary-light: #1c477d;
+            --accent: #2878e8;
+            --surface: #ffffff;
+        }
+
+        .container-main {
+            width: min(1400px, 94%);
+            margin: auto;
+        }
+
+        .header {
+            background: var(--primary);
+        }
+
+        .search-input {
+            width: 100%;
+            background: #fff;
+            border: 2px solid transparent;
+            outline: none;
+            transition: .2s;
+        }
+
+        .search-input:focus {
+            border-color: #60a5fa;
+        }
+
+        .category-item {
+            transition: .2s;
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            color: var(--accent);
+        }
+
+        .product-card {
+            min-width: 245px;
+            max-width: 245px;
+            background: white;
+            border: 1px solid #edf0f5;
+            border-radius: 15px;
+            padding: 15px;
+            transition: .25s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(20, 45, 80, .09);
+            border-color: #d5e4f7;
+        }
+
+        .product-image {
+            height: 145px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+            background: #f1f5fb;
+            margin-bottom: 15px;
+        }
+
+        .product-track {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            padding: 8px 2px 18px;
+        }
+
+        .product-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slider-banner {
+            position: relative;
+            min-height: 310px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: #102c52;
+        }
+
+        .banner-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            padding: 45px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .5s;
+        }
+
+        .banner-slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .banner-circle {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            left: 8%;
+            top: -100px;
+            background: rgba(255,255,255,.06);
+        }
+
+        .banner-icon {
+            position: absolute;
+            left: 12%;
+            font-size: 125px;
+            z-index: 1;
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,.2));
+        }
+
+        .slider-dots button {
+            width: 8px;
+            height: 8px;
+            border-radius: 20px;
+            background: #9caec4;
+            transition: .2s;
+        }
+
+        .slider-dots button.active {
+            width: 25px;
+            background: #2878e8;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            transition: .2s;
+        }
+
+        .btn-primary:hover {
+            background: #1763ca;
+            transform: translateY(-1px);
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .2s;
+        }
+
+        .icon-btn:hover {
+            background: #edf3fb;
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid #edf0f5;
+            border-radius: 17px;
+            padding: 22px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #102c52;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 12px;
+            z-index: 100;
+            animation: toastIn .3s ease;
+            box-shadow: 0 10px 30px #0002;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.45);
+            z-index: 90;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: min(420px, 90%);
+            background: white;
+            z-index: 91;
+            padding: 25px;
+            overflow-y: auto;
+            animation: drawerIn .25s ease;
+        }
+
+        @keyframes drawerIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media(max-width: 768px) {
+            .banner-slide {
+                padding: 25px;
+            }
+
+            .banner-icon {
+                font-size: 75px;
+                left: 5%;
+                opacity: .55;
+            }
+
+            .banner-circle {
+                left: -100px;
+            }
+
+            .slider-banner {
+                min-height: 280px;
+            }
+
+            .desktop-nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .product-card {
+                min-width: 220px;
+                max-width: 220px;
+            }
+        }
+
+        @media(max-width: 480px) {
+            .container-main {
+                width: 92%;
+            }
+
+            .banner-slide {
+                padding: 20px;
+            }
+
+            .banner-slide h2 {
+                font-size: 25px;
+            }
+
+            .product-image {
+                height: 125px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+const { useState, useEffect, useRef } = React;
+
+
+/* ======================================
+   DATA
+====================================== */
+
+const products = [
+    {
+        id: 1,
+        title: "نصب ویندوز 11 و درایورها",
+        category: "software",
+        price: 250000,
+        oldPrice: 350000,
+        rating: 4.9,
+        discount: 28,
+        icon: "💻",
+        badge: "پرفروش",
+        description: "نصب ویندوز به همراه نصب کامل درایورها و تنظیمات اولیه"
+    },
+    {
+        id: 2,
+        title: "طراحی سایت فروشگاهی",
+        category: "web",
+        price: 4500000,
+        oldPrice: 6000000,
+        rating: 4.8,
+        discount: 25,
+        icon: "🌐",
+        badge: "ویژه",
+        description: "طراحی سایت فروشگاهی مدرن و کاملاً واکنش‌گرا"
+    },
+    {
+        id: 3,
+        title: "تعمیر و عیب‌یابی کامپیوتر",
+        category: "hardware",
+        price: 350000,
+        oldPrice: 450000,
+        rating: 4.7,
+        discount: 22,
+        icon: "🖥️",
+        badge: "پیشنهادی",
+        description: "عیب‌یابی نرم‌افزاری و سخت‌افزاری سیستم"
+    },
+    {
+        id: 4,
+        title: "نصب و فعال‌سازی آفیس",
+        category: "software",
+        price: 180000,
+        oldPrice: 250000,
+        rating: 4.9,
+        discount: 28,
+        icon: "📄",
+        badge: "",
+        description: "نصب مجموعه آفیس و تنظیمات مورد نیاز"
+    },
+    {
+        id: 5,
+        title: "طراحی لوگو اختصاصی",
+        category: "design",
+        price: 850000,
+        oldPrice: 1200000,
+        rating: 4.8,
+        discount: 29,
+        icon: "🎨",
+        badge: "جدید",
+        description: "طراحی لوگوی حرفه‌ای و اختصاصی برند"
+    },
+    {
+        id: 6,
+        title: "ساخت ربات تلگرام",
+        category: "programming",
+        price: 1500000,
+        oldPrice: 2000000,
+        rating: 4.6,
+        discount: 25,
+        icon: "🤖",
+        badge: "",
+        description: "طراحی و توسعه ربات تلگرام اختصاصی"
+    },
+    {
+        id: 7,
+        title: "افزایش سرعت ویندوز",
+        category: "software",
+        price: 220000,
+        oldPrice: 300000,
+        rating: 4.7,
+        discount: 27,
+        icon: "⚡",
+        badge: "",
+        description: "بهینه‌سازی ویندوز و افزایش عملکرد سیستم"
+    },
+    {
+        id: 8,
+        title: "طراحی رابط کاربری UI/UX",
+        category: "design",
+        price: 1800000,
+        oldPrice: 2400000,
+        rating: 4.9,
+        discount: 25,
+        icon: "✨",
+        badge: "ویژه",
+        description: "طراحی رابط کاربری حرفه‌ای برای وب و اپلیکیشن"
+    },
+    {
+        id: 9,
+        title: "برنامه‌نویسی اختصاصی",
+        category: "programming",
+        price: 2500000,
+        oldPrice: 3200000,
+        rating: 4.8,
+        discount: 22,
+        icon: "👨🏻‍💻",
+        badge: "",
+        description: "توسعه نرم‌افزار و ابزارهای اختصاصی"
+    },
+    {
+        id: 10,
+        title: "ارتقای سخت‌افزار سیستم",
+        category: "hardware",
+        price: 300000,
+        oldPrice: 400000,
+        rating: 4.7,
+        discount: 25,
+        icon: "⚙️",
+        badge: "",
+        description: "مشاوره و نصب قطعات سخت‌افزاری"
+    }
+];
+
+const categories = [
+    { id: "all", title: "همه خدمات", icon: "grid-2x2" },
+    { id: "software", title: "نرم‌افزار", icon: "monitor" },
+    { id: "hardware", title: "سخت‌افزار", icon: "cpu" },
+    { id: "web", title: "طراحی سایت", icon: "globe" },
+    { id: "design", title: "گرافیک و طراحی", icon: "palette" },
+    { id: "programming", title: "برنامه‌نویسی", icon: "code" }
+];
+
+const slides = [
+    {
+        title: "خدمات دیجیتال،<br/> با کیفیتی متفاوت",
+        subtitle: "تمام نیازهای رایانه‌ای شما در یک فروشگاه",
+        button: "مشاهده خدمات",
+        icon: "💻",
+        background: "#102c52"
+    },
+    {
+        title: "کسب‌وکار خودت رو<br/> آنلاین کن!",
+        subtitle: "طراحی سایت حرفه‌ای با جدیدترین تکنولوژی‌ها",
+        button: "مشاهده خدمات طراحی سایت",
+        icon: "🌐",
+        background: "#173d70"
+    },
+    {
+        title: "تخفیف‌های ویژه<br/> خدمات نرم‌افزاری",
+        subtitle: "با هزینه کمتر، خدمات حرفه‌ای دریافت کن",
+        button: "مشاهده تخفیف‌ها",
+        icon: "⚡",
+        background: "#16365d"
+    }
+];
+
+
+/* ======================================
+   HELPERS
+====================================== */
+
+const formatPrice = (price) => {
+    return new Intl.NumberFormat("fa-IR").format(price) + " تومان";
+};
+
+const Icon = ({ name, size = 20, ...props }) => (
+    <i
+        data-lucide={name}
+        style={{
+            width: size,
+            height: size,
+            display: "inline-block",
+            flexShrink: 0
+        }}
+        {...props}
+    ></i>
+);
+
+
+/* ======================================
+   MAIN APP
+====================================== */
+
+function App() {
+
+    const [cart, setCart] = useState([]);
+    const [favorites, setFavorites] = useState([]);
+    const [activeCategory, setActiveCategory] = useState("all");
+    const [search, setSearch] = useState("");
+    const [activeSlide, setActiveSlide] = useState(0);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [toast, setToast] = useState("");
+    const [mobileNav, setMobileNav] = useState(false);
+
+    const trackRefs = useRef({});
+
+    const notify = (message) => {
+        setToast(message);
+        setTimeout(() => setToast(""), 2500);
+    };
+
+    const addToCart = (product) => {
+        setCart(prev => {
+            const existing = prev.find(item => item.id === product.id);
+
+            if (existing) {
+                return prev.map(item =>
+                    item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+                );
+            }
+
+            return [...prev, { ...product, quantity: 1 }];
+        });
+
+        notify("محصول به سبد خرید اضافه شد");
+    };
+
+    const removeFromCart = (id) => {
+        setCart(prev => prev.filter(item => item.id !== id));
+        notify("محصول از سبد خرید حذف شد");
+    };
+
+    const changeQuantity = (id, amount) => {
+        setCart(prev =>
+            prev.map(item =>
+                item.id === id
+                ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+                : item
+            )
+        );
+    };
+
+    const toggleFavorite = (id) => {
+        setFavorites(prev => {
+            const exists = prev.includes(id);
+
+            notify(exists
+                ? "از علاقه‌مندی‌ها حذف شد"
+                : "به علاقه‌مندی‌ها اضافه شد"
+            );
+
+            return exists
+                ? prev.filter(item => item !== id)
+                : [...prev, id];
+        });
+    };
+
+    const cartCount = cart.reduce(
+        (sum, item) => sum + item.quantity, 0
+    );
+
+    const cartTotal = cart.reduce(
+        (sum, item) => sum + item.price * item.quantity, 0
+    );
+
+    const filteredProducts = products.filter(product => {
+
+        const categoryMatch =
+            activeCategory === "all" ||
+            product.category === activeCategory;
+
+        const searchMatch =
+            product.title.toLowerCase().includes(search.toLowerCase());
+
+        return categoryMatch && searchMatch;
+    });
+
+    const scrollTrack = (id, direction) => {
+        const element = trackRefs.current[id];
+
+        if (element) {
+            element.scrollBy({
+                left: direction * 280,
+                behavior: "smooth"
+            });
+        }
+    };
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setActiveSlide(prev => (prev + 1) % slides.length);
+        }, 5000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+    });
+
+    const goToProducts = () => {
+        document.getElementById("products")
+            ?.scrollIntoView({ behavior: "smooth" });
+    };
+
+
+    /* ======================================
+       PRODUCT CARD
+    ====================================== */
+
+    const ProductCard = ({ product }) => {
+
+        const isFavorite = favorites.includes(product.id);
+
+        return (
+            <article className="product-card">
+
+                <div className="absolute top-3 right-3 z-10">
+                    {product.badge && (
+                        <span className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-lg">
+                            {product.badge}
+                        </span>
+                    )}
+                </div>
+
+                <button
+                    onClick={() => toggleFavorite(product.id)}
+                    className="absolute left-3 top-3 icon-btn text-gray-400"
+                    aria-label="افزودن به علاقه‌مندی‌ها"
+                >
+                    <Icon
+                        name="heart"
+                        size={19}
+                        style={{
+                            color: isFavorite ? "#ef4444" : undefined,
+                            fill: isFavorite ? "#ef4444" : "none"
+                        }}
+                    />
+                </button>
+
+                <div className="product-image">
+                    {product.icon}
+                </div>
+
+                <div className="flex items-center gap-1 text-xs text-gray-400 mb-3">
+                    <Icon name="star" size={14}
+                        style={{color:"#f59e0b", fill:"#f59e0b"}} />
+                    <span>{product.rating}</span>
+                    <span className="mr-1">|</span>
+                    <span>خدمات تخصصی</span>
+                </div>
+
+                <h3 className="text-sm font-bold leading-7 h-14 overflow-hidden">
+                    {product.title}
+                </h3>
+
+                <p className="text-xs text-gray-400 leading-6 h-12 overflow-hidden">
+                    {product.description}
+                </p>
+
+                <div className="flex justify-between items-center mt-4">
+
+                    <div>
+                        <p className="text-xs text-gray-400 line-through">
+                            {formatPrice(product.oldPrice)}
+                        </p>
+
+                        <p className="font-bold text-sm text-gray-900 mt-1">
+                            {formatPrice(product.price)}
+                        </p>
+                    </div>
+
+                    <span className="bg-red-50 text-red-600 rounded-lg text-xs px-2 py-1">
+                        {product.discount}٪
+                    </span>
+
+                </div>
+
+                <button
+                    onClick={() => addToCart(product)}
+                    className="btn-primary w-full rounded-xl py-3 mt-4 text-sm font-medium flex items-center justify-center gap-2"
+                >
+                    <Icon name="shopping-cart" size={17}/>
+                    افزودن به سبد
+                </button>
+
+            </article>
+        );
+    };
+
+
+    /* ======================================
+       HORIZONTAL PRODUCT SECTION
+    ====================================== */
+
+    const ProductSection = ({ title, subtitle, items, id }) => {
+
+        if (!items.length) return null;
+
+        return (
+            <section className="mt-12">
+
+                <div className="flex justify-between items-center mb-5">
+
+                    <div>
+                        <h2 className="font-bold text-xl">
+                            {title}
+                        </h2>
+
+                        {subtitle && (
+                            <p className="text-xs text-gray-400 mt-2">
+                                {subtitle}
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="flex gap-2">
+
+                        <button
+                            onClick={() => scrollTrack(id, 1)}
+                            className="icon-btn bg-white border border-gray-200"
+                            aria-label="حرکت به چپ"
+                        >
+                            <Icon name="chevron-right"/>
+                        </button>
+
+                        <button
+                            onClick={() => scrollTrack(id, -1)}
+                            className="icon-btn bg-white border border-gray-200"
+                            aria-label="حرکت به راست"
+                        >
+                            <Icon name="chevron-left"/>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div
+                    className="product-track"
+                    ref={el => trackRefs.current[id] = el}
+                >
+                    {items.map(product => (
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                        />
+                    ))}
+                </div>
+
+            </section>
+        );
+    };
+
+
+    /* ======================================
+       RENDER
+    ====================================== */
+
+    return (
+
+        <>
+
+            {/* HEADER */}
+
+            <header className="header text-white">
+
+                <div className="container-main">
+
+                    <div className="h-20 flex items-center justify-between gap-5">
+
+                        <a href="#" className="flex items-center gap-3 shrink-0">
+
+                            <div className="w-11 h-11 rounded-xl bg-blue-500 flex items-center justify-center">
+                                <Icon name="monitor" size={25}/>
+                            </div>
+
+                            <div>
+                                <h1 className="font-bold text-xl">
+                                    تک‌مارکت
+                                </h1>
+
+                                <p className="text-xs text-blue-200">
+                                    فروشگاه خدمات دیجیتال
+                                </p>
+                            </div>
+
+                        </a>
+
+
+                        {/* SEARCH */}
+
+                        <div className="flex-1 max-w-xl hidden md:block">
+
+                            <div className="relative">
+
+                                <Icon
+                                    name="search"
+                                    size={20}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                                />
+
+                                <input
+                                    type="search"
+                                    placeholder="جستجوی خدمات، محصولات و..."
+                                    className="search-input rounded-xl text-sm text-gray-800 py-3 pr-12 pl-4"
+                                    value={search}
+                                    onChange={e => {
+                                        setSearch(e.target.value);
+                                        setActiveCategory("all");
+                                        goToProducts();
+                                    }}
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* ACTIONS */}
+
+                        <div className="flex items-center gap-2">
+
+                            <button
+                                className="icon-btn hover:bg-white/10 relative"
+                                onClick={() => notify(
+                                    favorites.length
+                                    ? `${favorites.length} محصول در علاقه‌مندی‌ها داری`
+                                    : "هنوز محصولی به علاقه‌مندی‌ها اضافه نکرده‌ای"
+                                )}
+                                aria-label="علاقه‌مندی‌ها"
+                            >
+                                <Icon name="heart"/>
+                            </button>
+
+                            <button
+                                onClick={() => setDrawerOpen(true)}
+                                className="relative flex items-center gap-2 border border-white/20 rounded-xl px-3 py-2 hover:bg-white/10"
+                            >
+                                <Icon name="shopping-bag"/>
+
+                                <span className="hidden sm:block text-sm">
+                                    سبد خرید
+                                </span>
+
+                                {cartCount > 0 && (
+                                    <span className="absolute -top-2 -left-2 bg-red-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                                        {cartCount}
+                                    </span>
+                                )}
+                            </button>
+
+                            <button
+                                className="mobile-menu icon-btn hover:bg-white/10"
+                                onClick={() => setMobileNav(!mobileNav)}
+                                aria-label="منو"
+                            >
+                                <Icon name="menu"/>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* MOBILE SEARCH */}
+
+                    <div className="pb-4 md:hidden">
+
+                        <input
+                            type="search"
+                            placeholder="جستجوی خدمات..."
+                            className="search-input rounded-xl py-3 px-4 text-sm text-gray-800"
+                            value={search}
+                            onChange={e => {
+                                setSearch(e.target.value);
+                                setActiveCategory("all");
+                            }}
+                        />
+
+                    </div>
+
+                </div>
+
+
+                {/* NAVIGATION */}
+
+                <nav className={`border-t border-white/10 ${mobileNav ? "block" : "hidden md:block"}`}>
+
+                    <div className="container-main flex items-center gap-8 py-3 text-sm text-blue-100 overflow-x-auto">
+
+                        <a href="#" className="hover:text-white shrink-0">
+                            خانه
+                        </a>
+
+                        <a href="#categories" className="hover:text-white shrink-0">
+                            دسته‌بندی خدمات
+                        </a>
+
+                        <a href="#special" className="hover:text-white shrink-0">
+                            پیشنهاد ویژه
+                        </a>
+
+                        <a href="#products" className="hover:text-white shrink-0">
+                            فروشگاه
+                        </a>
+
+                        <a href="#about" className="hover:text-white shrink-0">
+                            درباره ما
+                        </a>
+
+                    </div>
+
+                </nav>
+
+            </header>
+
+
+            {/* MAIN */}
+
+            <main className="container-main py-8">
+
+
+                {/* SLIDER */}
+
+                <section className="slider-banner">
+
+                    <div className="banner-circle"></div>
+
+                    {slides.map((slide, index) => (
+
+                        <div
+                            key={index}
+                            className={`banner-slide ${activeSlide === index ? "active" : ""}`}
+                            style={{background: slide.background}}
+                        >
+
+                            <div className="relative z-10 max-w-xl text-white">
+
+                                <span className="text-blue-300 text-sm">
+                                    تک‌مارکت / خدمات دیجیتال
+                                </span>
+
+                                <h2
+                                    className="font-bold text-4xl leading-relaxed mt-4"
+                                    dangerouslySetInnerHTML={{
+                                        __html: slide.title
+                                    }}
+                                />
+
+                                <p className="text-blue-100 text-sm mt-3">
+                                    {slide.subtitle}
+                                </p>
+
+                                <button
+                                    onClick={goToProducts}
+                                    className="bg-white text-blue-900 rounded-xl px-6 py-3 mt-7 text-sm font-bold hover:bg-blue-50 transition"
+                                >
+                                    {slide.button}
+                                    <Icon name="arrow-left" size={16}
+                                        className="inline mr-2"
+                                    />
+                                </button>
+
+                            </div>
+
+                            <div className="banner-icon">
+                                {slide.icon}
+                            </div>
+
+                        </div>
+
+                    ))}
+
+
+                    <div className="absolute bottom-5 right-8 z-20 flex gap-2 slider-dots">
+
+                        {slides.map((_, index) => (
+
+                            <button
+                                key={index}
+                                onClick={() => setActiveSlide(index)}
+                                className={activeSlide === index ? "active" : ""}
+                                aria-label={`اسلاید ${index + 1}`}
+                            />
+
+                        ))}
+
+                    </div>
+
+
+                    <button
+                        onClick={() => setActiveSlide(
+                            (activeSlide + 1) % slides.length
+                        )}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/15 hover:bg-white/30 text-white rounded-full w-10 h-10 flex items-center justify-center"
+                        aria-label="اسلاید بعدی"
+                    >
+                        <Icon name="chevron-left"/>
+                    </button>
+
+                    <button
+                        onClick={() => setActiveSlide(
+                            (activeSlide - 1 + slides.length) % slides.length
+                        )}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/15 hover:bg-white/30 text-white rounded-full w-10 h-10 flex items-center justify-center"
+                        aria-label="اسلاید قبلی"
+                    >
+                        <Icon name="chevron-right"/>
+                    </button>
+
+                </section>
+
+
+                {/* TRUST SECTION */}
+
+                <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-7">
+
+                    {[
+                        ["shield-check", "ضمانت کیفیت خدمات", "ارائه خدمات مطمئن"],
+                        ["headset", "پشتیبانی تخصصی", "همراه شما هستیم"],
+                        ["clock", "تحویل به‌موقع", "صرفه‌جویی در زمان"],
+                        ["badge-percent", "قیمت مناسب", "هزینه‌های شفاف"]
+                    ].map((item, index) => (
+
+                        <div
+                            key={index}
+                            className="bg-white border border-gray-100 rounded-xl p-4 flex items-center gap-3"
+                        >
+
+                            <div className="w-11 h-11 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center shrink-0">
+                                <Icon name={item[0]} size={22}/>
+                            </div>
+
+                            <div>
+                                <h3 className="font-bold text-sm">
+                                    {item[1]}
+                                </h3>
+
+                                <p className="text-xs text-gray-400 mt-1">
+                                    {item[2]}
+                                </p>
+                            </div>
+
+                        </div>
+
+                    ))}
+
+                </section>
+
+
+                {/* CATEGORIES */}
+
+                <section id="categories" className="mt-14">
+
+                    <div className="mb-6">
+
+                        <h2 className="font-bold text-xl">
+                            دسته‌بندی خدمات
+                        </h2>
+
+                        <p className="text-sm text-gray-400 mt-2">
+                            خدمات مورد نیازت رو سریع‌تر پیدا کن
+                        </p>
+
+                    </div>
+
+
+                    <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+
+                        {categories.map(category => (
+
+                            <button
+                                key={category.id}
+                                onClick={() => {
+                                    setActiveCategory(category.id);
+                                    setSearch("");
+                                    goToProducts();
+                                }}
+                                className={`category-item rounded-2xl p-5 flex flex-col items-center gap-3 border transition ${
+                                    activeCategory === category.id
+                                    ? "bg-blue-50 border-blue-300 text-blue-700"
+                                    : "bg-white border-gray-100"
+                                }`}
+                            >
+
+                                <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600">
+                                    <Icon name={category.icon} size={26}/>
+                                </div>
+
+                                <span className="text-xs md:text-sm font-medium text-center">
+                                    {category.title}
+                                </span>
+
+                            </button>
+
+                        ))}
+
+                    </div>
+
+                </section>
+
+
+                {/* SPECIAL PRODUCTS */}
+
+                <div id="special">
+
+                    <ProductSection
+                        id="special-track"
+                        title="پیشنهادهای ویژه"
+                        subtitle="خدمات منتخب با تخفیف‌های جذاب"
+                        items={products.filter(p => p.discount >= 25)}
+                    />
+
+                </div>
+
+
+                {/* PROMO BANNER */}
+
+                <section className="mt-12 bg-gradient-to-l from-blue-950 to-blue-800 rounded-2xl p-7 md:p-10 text-white flex items-center justify-between overflow-hidden relative">
+
+                    <div className="relative z-10">
+
+                        <span className="text-blue-300 text-sm">
+                            فرصت ویژه
+                        </span>
+
+                        <h2 className="text-2xl md:text-3xl font-bold mt-3">
+                            ایده‌ات رو به واقعیت تبدیل کن!
+                        </h2>
+
+                        <p className="text-blue-200 text-sm mt-3">
+                            برای سفارش خدمات اختصاصی با ما در ارتباط باش.
+                        </p>
+
+                        <a
+                            href="mailto:info@example.com"
+                            className="inline-block bg-white text-blue-900 px-5 py-3 rounded-xl text-sm font-bold mt-6"
+                        >
+                            ثبت سفارش اختصاصی
+                        </a>
+
+                    </div>
+
+                    <div className="text-8xl opacity-20 hidden sm:block">
+                        🚀
+                    </div>
+
+                </section>
+
+
+                {/* ALL PRODUCTS */}
+
+                <section id="products" className="mt-14">
+
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+
+                        <div>
+
+                            <h2 className="font-bold text-xl">
+                                {search
+                                    ? "نتایج جستجو"
+                                    : activeCategory === "all"
+                                    ? "تمام خدمات"
+                                    : categories.find(c => c.id === activeCategory)?.title
+                                }
+                            </h2>
+
+                            <p className="text-xs text-gray-400 mt-2">
+                                {filteredProducts.length} خدمت موجود است
+                            </p>
+
+                        </div>
+
+
+                        <div className="flex gap-2 overflow-x-auto">
+
+                            {categories.map(category => (
+
+                                <button
+                                    key={category.id}
+                                    onClick={() => {
+                                        setActiveCategory(category.id);
+                                        setSearch("");
+                                    }}
+                                    className={`text-xs whitespace-nowrap px-4 py-2 rounded-xl border ${
+                                        activeCategory === category.id
+                                        ? "bg-blue-600 border-blue-600 text-white"
+                                        : "bg-white border-gray-200 text-gray-600"
+                                    }`}
+                                >
+                                    {category.title}
+                                </button>
+
+                            ))}
+
+                        </div>
+
+                    </div>
+
+
+                    {filteredProducts.length > 0 ? (
+
+                        <div className="product-track">
+
+                            {filteredProducts.map(product => (
+
+                                <ProductCard
+                                    key={product.id}
+                                    product={product}
+                                />
+
+                            ))}
+
+                        </div>
+
+                    ) : (
+
+                        <div className="section-card text-center py-16">
+
+                            <Icon name="search-x" size={45}/>
+
+                            <h3 className="font-bold mt-4">
+                                محصولی پیدا نشد!
+                            </h3>
+
+                            <p className="text-sm text-gray-400 mt-2">
+                                عبارت دیگری را جستجو کنید.
+                            </p>
+
+                            <button
+                                onClick={() => {
+                                    setSearch("");
+                                    setActiveCategory("all");
+                                }}
+                                className="btn-primary px-5 py-2 rounded-xl mt-5 text-sm"
+                            >
+                                نمایش همه خدمات
+                            </button>
+
+                        </div>
+
+                    )}
+
+                </section>
+
+
+                {/* POPULAR PRODUCTS */}
+
+                <ProductSection
+                    id="popular-track"
+                    title="محبوب‌ترین خدمات"
+                    subtitle="خدماتی که کاربران بیشتر انتخاب کرده‌اند"
+                    items={[...products].sort((a,b) => b.rating - a.rating).slice(0,6)}
+                />
+
+
+                {/* ABOUT */}
+
+                <section id="about" className="section-card mt-14">
+
+                    <div className="max-w-3xl mx-auto text-center py-5">
+
+                        <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto">
+                            <Icon name="monitor" size={30}/>
+                        </div>
+
+                        <h2 className="font-bold text-2xl mt-5">
+                            چرا تک‌مارکت؟
+                        </h2>
+
+                        <p className="text-gray-500 text-sm leading-8 mt-4">
+                            تک‌مارکت بستری برای دسترسی آسان به خدمات تخصصی
+                            رایانه‌ای و دیجیتال است. هدف ما ایجاد تجربه‌ای
+                            ساده، سریع و مطمئن برای خرید خدمات مورد نیاز شماست.
+                        </p>
+
+                    </div>
+
+                </section>
+
+
+            </main>
+
+
+            {/* FOOTER */}
+
+            <footer className="header text-white mt-16">
+
+                <div className="container-main py-12">
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
+
+                        <div>
+
+                            <h2 className="font-bold text-xl">
+                                تک‌مارکت
+                            </h2>
+
+                            <p className="text-blue-200 text-sm leading-8 mt-4">
+                                فروشگاه تخصصی خدمات رایانه‌ای،
+                                نرم‌افزاری و دیجیتال.
+                            </p>
+
+                        </div>
+
+                        <div>
+
+                            <h3 className="font-bold mb-4">
+                                دسترسی سریع
+                            </h3>
+
+                            <div className="flex flex-col gap-3 text-sm text-blue-200">
+
+                                <a href="#">صفحه اصلی</a>
+                                <a href="#categories">دسته‌بندی خدمات</a>
+                                <a href="#products">فروشگاه</a>
+                                <a href="#special">پیشنهاد ویژه</a>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <h3 className="font-bold mb-4">
+                                خدمات مشتریان
+                            </h3>
+
+                            <div className="flex flex-col gap-3 text-sm text-blue-200">
+
+                                <a href="mailto:info@example.com">تماس با ما</a>
+                                <a href="mailto:info@example.com">پشتیبانی</a>
+                                <a href="#about">درباره ما</a>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <h3 className="font-bold mb-4">
+                                ارتباط با ما
+                            </h3>
+
+                            <p className="text-sm text-blue-200 leading-8">
+                                ایمیل:
+                                <br/>
+                                info@example.com
+                            </p>
+
+                            <div className="flex gap-3 mt-4">
+
+                                <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="اینستاگرام"
+                                    className="icon-btn bg-white/10">
+                                    <Icon name="instagram"/>
+                                </a>
+
+                                <a href="https://telegram.org" target="_blank" rel="noreferrer" aria-label="تلگرام"
+                                    className="icon-btn bg-white/10">
+                                    <Icon name="send"/>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className="border-t border-white/10 mt-10 pt-6 text-center text-xs text-blue-300">
+                        تمامی حقوق برای تک‌مارکت محفوظ است.
+                        © 2026
+                    </div>
+
+                </div>
+
+            </footer>
+
+
+            {/* CART DRAWER */}
+
+            {drawerOpen && (
+
+                <>
+
+                    <div
+                        className="drawer-overlay"
+                        onClick={() => setDrawerOpen(false)}
+                    />
+
+                    <aside
+                        className="drawer"
+                        aria-label="سبد خرید"
+                    >
+
+                        <div className="flex justify-between items-center border-b pb-5">
+
+                            <h2 className="font-bold text-lg">
+                                سبد خرید شما
+                            </h2>
+
+                            <button
+                                onClick={() => setDrawerOpen(false)}
+                                className="icon-btn bg-gray-100"
+                                aria-label="بستن"
+                            >
+                                <Icon name="x"/>
+                            </button>
+
+                        </div>
+
+
+                        {cart.length === 0 ? (
+
+                            <div className="text-center py-24">
+
+                                <Icon name="shopping-bag" size={55}/>
+
+                                <h3 className="font-bold mt-5">
+                                    سبد خرید خالی است
+                                </h3>
+
+                                <p className="text-sm text-gray-400 mt-3">
+                                    هنوز خدمتی انتخاب نکرده‌اید.
+                                </p>
+
+                                <button
+                                    onClick={() => setDrawerOpen(false)}
+                                    className="btn-primary rounded-xl px-6 py-3 mt-6"
+                                >
+                                    ادامه خرید
+                                </button>
+
+                            </div>
+
+                        ) : (
+
+                            <>
+
+                                <div className="mt-5 space-y-4">
+
+                                    {cart.map(item => (
+
+                                        <div
+                                            key={item.id}
+                                            className="flex gap-3 border-b pb-4"
+                                        >
+
+                                            <div className="w-16 h-16 rounded-xl bg-gray-100 flex items-center justify-center text-3xl shrink-0">
+                                                {item.icon}
+                                            </div>
+
+                                            <div className="flex-1">
+
+                                                <h3 className="text-sm font-bold leading-6">
+                                                    {item.title}
+                                                </h3>
+
+                                                <p className="text-blue-600 text-sm mt-2">
+                                                    {formatPrice(item.price)}
+                                                </p>
+
+                                                <div className="flex justify-between items-center mt-3">
+
+                                                    <div className="flex items-center gap-3 bg-gray-100 rounded-lg p-1">
+
+                                                        <button
+                                                            onClick={() => changeQuantity(item.id, 1)}
+                                                            aria-label="افزایش تعداد"
+                                                        >
+                                                            <Icon name="plus" size={15}/>
+                                                        </button>
+
+                                                        <span className="text-sm">
+                                                            {item.quantity}
+                                                        </span>
+
+                                                        <button
+                                                            onClick={() => {
+                                                                if(item.quantity === 1) {
+                                                                    removeFromCart(item.id);
+                                                                } else {
+                                                                    changeQuantity(item.id, -1);
+                                                                }
+                                                            }}
+                                                            aria-label="کاهش تعداد"
+                                                        >
+                                                            <Icon name="minus" size={15}/>
+                                                        </button>
+
+                                                    </div>
+
+                                                    <button
+                                                        onClick={() => removeFromCart(item.id)}
+                                                        className="text-red-500"
+                                                        aria-label="حذف محصول"
+                                                    >
+                                                        <Icon name="trash-2" size={17}/>
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+                                    ))}
+
+                                </div>
+
+
+                                <div className="absolute bottom-0 right-0 left-0 bg-white border-t p-6">
+
+                                    <div className="flex justify-between items-center mb-5">
+
+                                        <span className="text-gray-500 text-sm">
+                                            مبلغ قابل پرداخت
+                                        </span>
+
+                                        <strong className="text-lg">
+                                            {formatPrice(cartTotal)}
+                                        </strong>
+
+                                    </div>
+
+                                    <button
+                                        onClick={() => notify(
+                                            "برای ثبت سفارش نهایی، اتصال درگاه پرداخت و Backend لازم است."
+                                        )}
+                                        className="btn-primary w-full py-4 rounded-xl font-bold"
+                                    >
+                                        ادامه و ثبت سفارش
+                                    </button>
+
+                                    <p className="text-xs text-gray-400 text-center mt-3">
+                                        پرداخت امن و آسان
+                                    </p>
+
+                                </div>
+
+                            </>
+
+                        )}
+
+                    </aside>
+
+                </>
+
+            )}
+
+
+            {/* TOAST */}
+
+            {toast && (
+                <div className="toast flex items-center gap-3">
+                    <Icon name="check-circle" size={20}/>
+                    <span className="text-sm">{toast}</span>
+                </div>
+            )}
+
+        </>
+
+    );
+
+}
+
+
+/* ======================================
+   MOUNT
+====================================== */
+
+const root = ReactDOM.createRoot(
+    document.getElementById("root")
+);
+
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
